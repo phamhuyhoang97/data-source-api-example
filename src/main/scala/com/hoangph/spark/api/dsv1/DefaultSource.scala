@@ -54,5 +54,11 @@ class DefaultSource extends RelationProvider with SchemaRelationProvider with Cr
         customFormatRDD.saveAsTextFile(path)
     }
 
-    override def createRelation(sqlContext: SQLContext, parameters: Map[String, String]): BaseRelation = ???
+    override def createRelation(sqlContext: SQLContext, parameters: Map[String, String]): BaseRelation = {
+        val pathParameter = parameters.get("path")
+        pathParameter match {
+            case Some(path) => new CustomDatasourceRelation(sqlContext, path, null)
+            case None => throw new IllegalArgumentException("The path parameter cannot be empty!")
+        }
+    }
 }

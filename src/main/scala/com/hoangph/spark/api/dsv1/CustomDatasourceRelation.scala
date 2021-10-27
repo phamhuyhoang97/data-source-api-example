@@ -19,9 +19,9 @@ class CustomDatasourceRelation(
             // You need to infer it on your own. E.g., read the header of CSV file.
             StructType(
                 StructField("name", StringType, nullable = true) ::
-                    StructField("surname", StringType, nullable = true) ::
-                    StructField("salary", IntegerType, nullable = true) ::
-                    Nil
+                StructField("surname", StringType, nullable = true) ::
+                StructField("salary", IntegerType, nullable = true) ::
+                Nil
             )
         }
     }
@@ -31,7 +31,7 @@ class CustomDatasourceRelation(
         val schemaFields = schema.fields
 
         val rowsRdd = initialRdd.map(fileContent => {
-            val lines = fileContent.split("\n")
+            val lines = fileContent.split("\\n")
             val data = lines.map(line => line.split("\\$").toSeq)
 
             val records = data.map(words => words.zipWithIndex.map {
@@ -57,7 +57,7 @@ class CustomDatasourceRelation(
         val schemaFields = schema.fields
 
         val rowsRdd = initialRdd.map(fileContent => {
-            val lines = fileContent.split("\n")
+            val lines = fileContent.split("\\n")
             val data = lines.map(line => line.split("\\$").toSeq)
 
             val records = data.map(words => words.zipWithIndex.map {
